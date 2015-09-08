@@ -28,6 +28,7 @@
         android:id="@+id/xmlAuthBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="OnClick_Auth"
         android:text="Войти" />
 
 </LinearLayout>
