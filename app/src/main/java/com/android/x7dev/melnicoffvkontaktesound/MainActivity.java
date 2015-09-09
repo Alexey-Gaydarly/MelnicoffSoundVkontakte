@@ -1,11 +1,12 @@
 package com.android.x7dev.melnicoffvkontaktesound;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
+import com.android.x7dev.melnicoffvkontaktesound.utils.Account;
 import com.android.x7dev.melnicoffvkontaktesound.utils.HttpRestClient;
 import com.android.x7dev.melnicoffvkontaktesound.utils.Util;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -16,10 +17,25 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "mainLog";
 
+    Account account = new Account();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        account.restore(getApplicationContext());
+
+        // Востанавливаем сохраненную сессию
+        // Проверить не возникает ли ошибка при пустой сессии
+        if (account.access_token != null) {
+            Intent intent = new Intent(MainActivity.this, PlaylistActivity.class);
+
+            intent.putExtra("access_token", account.access_token);
+            intent.putExtra("user_id", account.user_id);
+
+            startActivity(intent);
+        }
     }
 
     public void OnClick_Auth(View v) {
@@ -44,12 +60,11 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("user_id", user_id);
 
                 startActivity(intent);
-
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+                Toast.makeText(MainActivity.this, "Ошибка авторизации!", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -4,4 +4,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_playlist">PlaylistActivity</string>
+    <string name="playlist_artist">Artist</string>
+    <string name="playlist_title">Title</string>
 </resources>
